@@ -59,5 +59,5 @@ func poll(url string) {
 		return
 	}
 
-	results <- fmt.Sprintf("%s\t%s", resp.Status, url)
+	results <- fmt.Sprintf("%-15s%s", resp.Status, url)
 }
