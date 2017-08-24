@@ -47,10 +47,12 @@ func main() {
 		fmt.Println(info)
 	}
 
-	fmt.Println(time.Since(start))
+	fmt.Printf("%dms\n", int64(time.Since(start)/time.Millisecond))
 }
 
 func poll(url string) {
+	start := time.Now()
+
 	defer wg.Done()
 	resp, err := http.Get(url)
 
@@ -59,5 +61,6 @@ func poll(url string) {
 		return
 	}
 
-	results <- fmt.Sprintf("%-15s%s", resp.Status, url)
+	duration := int64(time.Since(start) / time.Millisecond)
+	results <- fmt.Sprintf("%-10s%s [%dms]", resp.Status, url, duration)
 }
